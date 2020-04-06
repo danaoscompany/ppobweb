@@ -28,7 +28,7 @@ class User extends CI_Controller {
     $transaction_n = 1;
     $transactions = $this->db->get_where('transactions', array(
         'phone' => $phone,
-        'nominal' => $nominal
+        'product_code' => $product
       ))->result_array();
     if (sizeof($transactions) > 0) {
       $transaction = $transactions[sizeof($transactions)-1];
