@@ -5,11 +5,11 @@ class User extends CI_Controller {
   
   public function get_transaction_n() {
     $phone = $this->input->post('phone');
-    $nominal = intval($this->input->post('nominal'));
+    $productCode = $this->input->post('product_code');
     $transaction_n = 0;
     $transactions = $this->db->get_where('transactions', array(
         'phone' => $phone,
-        'nominal' => $nominal
+        'product_code' => $productCode
       ))->result_array();
     if (sizeof($transactions) > 0) {
       $transaction = $transactions[sizeof($transactions)-1];
@@ -22,8 +22,7 @@ class User extends CI_Controller {
   public function purchase() {
     $userID = intval($this->input->post('user_id'));
     $phone = $this->input->post('phone');
-    $nominal = intval($this->input->post('nominal'));
-    $product = $this->input->post('product');
+    $product = $this->input->post('product_code');
     $message = $this->input->post('message');
     $date = $this->input->post('date');
     $transaction_n = 1;
@@ -38,8 +37,7 @@ class User extends CI_Controller {
     $this->db->insert('transactions', array(
         'user_id' => $userID,
         'phone' => $phone,
-        'nominal' => $nominal,
-        'product' => $product,
+        'product_code' => $product,
         'transaction_n' => $transaction_n,
         'message' => $message,
         'date' => $date
