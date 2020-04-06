@@ -19,6 +19,7 @@ class User extends CI_Controller {
     }
   }
   
+  
   public function purchase() {
     $userID = intval($this->input->post('user_id'));
     $phone = $this->input->post('phone');
