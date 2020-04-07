@@ -1,6 +1,15 @@
 <?php
 
 class User extends CI_Controller {
+
+  public function set_access_code() {
+    $userID = intval($this->input->post('user_id'));
+    $accessCode = $this->input->post('access_code');
+    $this->db->where('id', $userID);
+    $this->db->update('users', array(
+      'access_code' => $accessCode
+    ));
+  }
   
   public function user_have_access_code() {
     $userID = intval($this->input->post('user_id'));
