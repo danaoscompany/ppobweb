@@ -2,7 +2,7 @@
 
 class User extends CI_Controller {
   
-  public function user_have_access_token() {
+  public function user_have_access_code() {
     $userID = intval($this->input->post('user_id'));
     $results = $this->db->get_where('users', array(
       'id' => $userID
