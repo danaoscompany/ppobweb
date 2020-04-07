@@ -1,6 +1,17 @@
 <?php
 
 class User extends CI_Controller {
+  
+  public function get_pin() {
+    $userID = intval($this->input->post('user_id'));
+    $results = $this->db->get_where('users', array(
+      'id' => $userID
+    ))->result_array();
+    if (sizeof($results) > 0) {
+      $row = $results[0];
+      echo $row['pin'];
+    }
+  }
 
   public function set_access_code() {
     $userID = intval($this->input->post('user_id'));
