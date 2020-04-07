@@ -12,6 +12,23 @@ class User extends CI_Controller {
       echo $row['pin'];
     }
   }
+  
+  public function set_pin() {
+    $userID = intval($this->input->post('user_id'));
+    $oldPIN = $this->input->post('old_pin');
+    $pin = $this->input->post('pin');
+    if ($this->db->get_where('users', array(
+      'id' => $userID
+    ))->row_array()['pin'] != $oldPin) {
+      echo -1;
+      return;
+    }
+    $this->db->where('id', $userID);
+    $this->db->update('users', array(
+      'pin' => $pin
+    ));
+    echo 1;
+  }
 
   public function set_access_code() {
     $userID = intval($this->input->post('user_id'));
