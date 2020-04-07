@@ -1,7 +1,37 @@
 <?php
 
-
 class User extends CI_Controller {
+  
+  public function signup() {
+    $name = $this->input->post('name');
+    $city = $this->input->post('city');
+    $phone = $this->input->post('phone');
+    $pin = $this->input->post('pin');
+    if ($this->db->get_where('users', array(
+        'phone' => $phone
+      ))->num_rows() > 0) {
+        echo -1;
+        return;
+      }
+    $this->db->insert('users', array(
+      'name' => $name,
+      'phone' => $phone,
+      'city' => $city,
+      'pin' => $pin
+    ));
+    echo 1;
+  }
+  
+  public function check_user_exists() {
+    $phone = $this->input->post('phone');
+    if ($this->db->get_where('users', array(
+        'phone' => $phone
+      ))->num_rows() > 0) {
+        echo 1;
+      } else {
+        echo -1;
+      }
+  }
   
   public function get_transaction_n() {
     $phone = $this->input->post('phone');
