@@ -14,8 +14,8 @@ class User extends CI_Controller {
         echo json_encode(array(
           'response_code' => 1,
           'data' => array(
-            'email' => $row['email'],
-            'password' => $row['password']
+            'email' => $row['xabber_email'],
+            'password' => $row['xabber_password']
           )
         ));
       } else {
