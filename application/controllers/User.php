@@ -41,6 +41,7 @@ class User extends CI_Controller {
           'response_code' => 1,
           'data' => array(
             'user_id' => "" . $row['id'],
+            'access_code' => $row['access_code'],
             'email' => $row['xabber_email'],
             'password' => $row['xabber_password']
           )
