@@ -2,6 +2,23 @@
 
 class User extends CI_Controller {
   
+  public function user_have_access_token() {
+    $userID = intval($this->input->post('user_id'));
+    $results = $this->db->get_where('users', array(
+      'id' => $userID
+    ))->result_array();
+    if (sizeof($results) > 0) {
+      $row = $results[0];
+      if ($row['access_code'] == NULL || $row['access_code'] == '') {
+        echo -1;
+      } else {
+        echo 1;
+      }
+    } else {
+      echo -1;
+    }
+  }
+  
   public function login() {
     $phone = $this->input->post('phone');
     $pin = $this->input->post('pin');
