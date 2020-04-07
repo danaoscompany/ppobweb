@@ -19,7 +19,7 @@ class User extends CI_Controller {
     $pin = $this->input->post('pin');
     if ($this->db->get_where('users', array(
       'id' => $userID
-    ))->row_array()['pin'] != $oldPin) {
+    ))->row_array()['pin'] != $oldPIN) {
       echo -1;
       return;
     }
