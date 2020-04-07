@@ -2,6 +2,34 @@
 
 class User extends CI_Controller {
   
+  public function login() {
+    $phone = $this->input->post('phone');
+    $pin = $this->input->post('pin');
+    $results = $this->db->get_where('users', array(
+        'phone' => $phone
+    ))->result_array();
+    if (sizeof($results) > 0) {
+      $row = $results[0];
+      if ($row['pin'] == $pin) {
+        echo json_encode(array(
+          'response_code' => 1,
+          'data' => array(
+            'email' => $row['email'],
+            'password' => $row['password']
+          )
+        ));
+      } else {
+        echo json_encode(array(
+          'response_code' => -2
+        ));
+      }
+    } else {
+      echo json_encode(array(
+          'response_code' => -1
+        ));
+    }
+  }
+  
   public function signup() {
     $name = $this->input->post('name');
     $city = $this->input->post('city');
