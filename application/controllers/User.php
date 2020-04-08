@@ -2,6 +2,13 @@
 
 class User extends CI_Controller {
   
+  public function get_inbox() {
+    $userID = intval($this->input->post('user_id'));
+    $this->db->where('user_id', $userID)->or_where('user_id', -1);
+    $this->db->order_by('date', 'DESC');
+    echo json_encode($this->db->get('messages')->result_array());
+  }
+  
   public function get_pin() {
     $userID = intval($this->input->post('user_id'));
     $results = $this->db->get_where('users', array(
