@@ -6,6 +6,6 @@ class Admin extends CI_Controller {
     $start = intval($this->input->post('start'));
     $length = intval($this->input->post('length'));
     $this->db->limit($start, $length);
-    echo json_encode($this->db->get('users'));
+    echo json_encode($this->db->get('users')->result_array());
   }
 }
