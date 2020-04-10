@@ -21,8 +21,8 @@ class Admin extends CI_Controller {
     $this->db->where('id', $userID);
     $this->db->update('users', array(
       'name' => $name,
-      'email' => $email,
-      'password' => $password,
+      'xabber_email' => $email,
+      'xabber_password' => $password,
       'phone' => $phone,
       'pin' => $pin,
       'city' => $city,
