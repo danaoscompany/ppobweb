@@ -79,4 +79,5 @@ class Admin extends CI_Controller {
       'password' => $password
     ));
   }
+  
 }
