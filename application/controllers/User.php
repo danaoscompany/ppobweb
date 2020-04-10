@@ -2,6 +2,10 @@
 
 class User extends CI_Controller {
   
+  public function test() {
+    echo "Halo dunia";
+  }
+  
   public function get_inbox() {
     $userID = intval($this->input->post('user_id'));
     $this->db->where('user_id', $userID)->or_where('user_id', -1);
