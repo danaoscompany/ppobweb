@@ -48,4 +48,28 @@ class Admin extends CI_Controller {
       'access_code' => $accessCode
     ));
   }
+  
+  public function add_admin() {
+    $name = $this->input->post('name');
+    $email = $this->input->post('email');
+    $password = $this->input->post('password');
+    $this->db->insert('admins', array(
+      'name' => $name,
+      'email' => $email,
+      'password' => $password
+    ));
+  }
+  
+  public function save_admin() {
+    $userID = intval($this->input->post('user_id'));
+    $name = $this->input->post('name');
+    $email = $this->input->post('email');
+    $password = $this->input->post('password');
+    $this->db->where('id', $userID);
+    $this->db->update('admins', array(
+      'name' => $name,
+      'email' => $email,
+      'password' => $password
+    ));
+  }
 }
