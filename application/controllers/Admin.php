@@ -2,6 +2,22 @@
 
 class Admin extends CI_Controller {
   
+  public function add_banner() {
+    $config['upload_path'] = './userdata/';
+        $config['allowed_types'] = 'gif|jpg|png';
+        $config['max_size'] = 5000;
+        //$config['max_width'] = 1500;
+        //$config['max_height'] = 1500;
+
+        $this->load->library('upload', $config);
+
+        if ($this->upload->do_upload('file')) {
+            $this->db->insert('banners', array(
+              'img' => $this->upload->data()
+            ));
+        }
+  }
+  
   public function get_users() {
     $start = intval($this->input->post('start'));
     $length = intval($this->input->post('length'));
