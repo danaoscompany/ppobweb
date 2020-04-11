@@ -31,7 +31,7 @@ class Admin extends CI_Controller {
   
   public function find_user() {
     $keyword = $this->input->post('keyword');
-    $this->db->like(array('name' => $keyword, 'xabber_email' => $keyword));
+    $this->db->like(array('name' => "%" . $keyword . "%", 'xabber_email' => "%" . $keyword . "%"));
     echo json_encode($this->db->get('users')->result_array());
   }
   
