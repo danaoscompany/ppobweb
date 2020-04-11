@@ -12,7 +12,7 @@ class Admin extends CI_Controller {
       $row = $results[0];
       if ($row['password'] != $password) {
         echo json_encode(array(
-          'response_code' => -22
+          'response_code' => -2
         ));
       } else {
         echo json_encode(array(
