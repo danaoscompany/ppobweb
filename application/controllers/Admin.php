@@ -2,14 +2,30 @@
 
 class Admin extends CI_Controller {
   
+  public function edit_message() {
+    $id = intval($this->input->post('id'));
+    $title = $this->input->post('title');
+    $message = $this->input->post('message');
+    $userID = intval($this->input->post('user_id'));
+    $date = $this->input->post('date');
+    $this->db->where('id', $id);
+    $this->db->update('messages', array(
+      'user_id' => $userID,
+      'title' => $title,
+      'message' => $message
+    ));
+  }
+  
   public function add_message() {
     $title = $this->input->post('title');
     $message = $this->input->post('message');
     $userID = intval($this->input->post('user_id'));
+    $date = $this->input->post('date');
     $this->db->insert('messages', array(
       'user_id' => $userID,
       'title' => $title,
-      'message' => $message
+      'message' => $message,
+      'date' => $date
     ));
   }
   
