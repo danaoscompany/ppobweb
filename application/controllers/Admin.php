@@ -12,10 +12,10 @@ class Admin extends CI_Controller {
         $this->load->library('upload', $config);
 
         if ($this->upload->do_upload('file')) {
-            echo "Upload success: " . $this->upload->data();
-            $this->db->insert('banners', array(
+            echo "Upload success: " . json_encode($this->upload->data());
+            /*$this->db->insert('banners', array(
               'img' => $this->upload->data()
-            ));
+            ));*/
         } else {
           echo "Upload failed: " . json_encode($this->upload->display_errors());
         }
