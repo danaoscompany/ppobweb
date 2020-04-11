@@ -28,6 +28,13 @@ class Admin extends CI_Controller {
     echo json_encode($this->db->get('users')->result_array());
   }
   
+  public function get_messages() {
+    $start = intval($this->input->post('start'));
+    $length = intval($this->input->post('length'));
+    $this->db->limit($length, $start);
+    echo json_encode($this->db->get('messages')->result_array());
+  }
+  
   public function get_admins() {
     $start = intval($this->input->post('start'));
     $length = intval($this->input->post('length'));
