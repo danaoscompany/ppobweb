@@ -2,6 +2,17 @@
 
 class Admin extends CI_Controller {
   
+  public function add_message() {
+    $title = $this->input->post('title');
+    $message = $this->input->post('message');
+    $userID = intval($this->input->post('user_id'));
+    $this->db->insert('messages', array(
+      'user_id' => $userID,
+      'title' => $title,
+      'message' => $message
+    ));
+  }
+  
   public function find_user() {
     $keyword = $this->input->post('keyword');
     $this->db->like(array('name' => $keyword, 'xabber_email' => $keyword));
