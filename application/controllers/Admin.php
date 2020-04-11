@@ -2,6 +2,12 @@
 
 class Admin extends CI_Controller {
   
+  public function find_user() {
+    $keyword = $this->input->post('keyword');
+    $this->db->like(array('name', $keyword, 'email', $keyword));
+    echo json_encode($this->db->get('users'));
+  }
+  
   public function add_banner() {
     $config['upload_path'] = './userdata/';
         $config['allowed_types'] = 'gif|jpg|png';
