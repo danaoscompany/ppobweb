@@ -2,6 +2,33 @@
 
 class Admin extends CI_Controller {
   
+  public function login() {
+    $email = $this->input->post('email');
+    $password = $this->input->post('password');
+    $results = $this->db->get_where('users', array(
+      'email' => $email
+    ))->result_array();
+    if (sizeof($results) > 0) {
+      $row = $results[0];
+      if ($row['password'] != $password) {
+        echo json_encode(array(
+          'response_code' => -22
+        ));
+      } else {
+        echo json_encode(array(
+          'response_code' => 1,
+          'data' => array(
+            'user_id' => "" . $row['id']
+          )
+        ));
+      }
+    } else {
+      echo json_encode(array(
+          'response_code' => -1
+        ));
+    }
+  }
+  
   public function edit_message() {
     $id = intval($this->input->post('id'));
     $title = $this->input->post('title');
