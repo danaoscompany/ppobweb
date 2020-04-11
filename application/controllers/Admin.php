@@ -5,7 +5,7 @@ class Admin extends CI_Controller {
   public function login() {
     $email = $this->input->post('email');
     $password = $this->input->post('password');
-    $results = $this->db->get_where('users', array(
+    $results = $this->db->get_where('admins', array(
       'email' => $email
     ))->result_array();
     if (sizeof($results) > 0) {
