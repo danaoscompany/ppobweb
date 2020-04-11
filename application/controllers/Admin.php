@@ -17,7 +17,7 @@ class Admin extends CI_Controller {
               'img' => $this->upload->data()
             ));
         } else {
-          echo "Upload failed";
+          echo "Upload failed: " . json_encode($this->upload->display_errors());
         }
   }
   
