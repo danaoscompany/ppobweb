@@ -2,6 +2,15 @@
 
 class Admin extends CI_Controller {
   
+  public function update_fcm_id() {
+    $adminID = intval($this->input->post('admin_id'));
+    $fcmID = $this->input->post('fcm_id'));
+    $this->db->where('id', $adminID);
+    $this->db->update('admins', array(
+      'fcm_id' => $fcmID
+    ));
+  }
+  
   public function login() {
     $email = $this->input->post('email');
     $password = $this->input->post('password');
