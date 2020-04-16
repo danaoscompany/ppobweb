@@ -36,7 +36,16 @@ class Admin extends CI_Controller {
     $title = $this->input->post('title');
     $content = $this->input->post('content');
     $date = $this->input->post('date');
-    $config = array(
+    $imgChanged = intval($this->input->post('img_changed'));
+    if ($imgChanged == 0) {
+      $this->db->where('id', $newsID);
+      $this->db->update('news', array(
+            'title' => $title,
+            'content' => $content,
+            'date' => $date
+          ));
+    } else if ($imgChanged == 1) {
+      $config = array(
         'upload_path' => "./userdata/",
         'allowed_types' => "gif|jpg|png|jpeg",
         'overwrite' => TRUE,
@@ -53,6 +62,7 @@ class Admin extends CI_Controller {
             'img' => $this->upload->data()['file_name']
           ));
         }
+    }
   }
   
   public function delete_news() {
