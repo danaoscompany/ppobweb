@@ -37,6 +37,7 @@ class Admin extends CI_Controller {
     $content = $this->input->post('content');
     $date = $this->input->post('date');
     $imgChanged = intval($this->input->post('img_changed'));
+    echo "Image changed: " . $imgChanged . "<br/>";
     if ($imgChanged == 0) {
       $this->db->where('id', $newsID);
       $this->db->update('news', array(
