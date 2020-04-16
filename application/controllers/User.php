@@ -2,6 +2,85 @@
 
 class User extends CI_Controller {
   
+  public function update_jabber_password() {
+        $userID = intval($this->input->post('user_id'));
+        $password = $this->input->post('password');
+        $this->db->where('id', $userID);
+        $this->db->update('users', array(
+            'xabber_password' => $password
+        ));
+    }
+    
+    public function update_jabber_email() {
+        $userID = intval($this->input->post('user_id'));
+        $email = $this->input->post('email');
+        $this->db->where('id', $userID);
+        $this->db->update('users', array(
+            'xabber_email' => $email
+        ));
+    }
+  
+  public function add_user() {
+    $name = $this->input->post('name');
+    $phone = $this->input->post('phone');
+    $pin = $this->input->post('pin');
+    $city = $this->input->post('city');
+    $markup = $this->input->post('markup');
+    $this->db->insert('users', array(
+      'name' => $name,
+      'phone' => $phone,
+      'pin' => $pin,
+      'city' => $city,
+      'markup' => $markup
+    ));
+  }
+  
+  public function update_xabber_email() {
+    $phone = $this->input->post('phone');
+    $email = $this->input->post('email');
+    $password = $this->input->post('password');
+    $this->db->where('phone', $phone);
+    $this->db->update('users', array(
+      'xabber_email' => $email,
+      'xabber_password' => $password
+    ));
+  }
+  
+  public function register() {
+    $format = $this->input->post('format');
+    $admins = $this->db->get('admins')->result_array();
+    $date = $this->input->post('date');
+    $this->db->insert('registrations', array(
+      'format' => $format,
+      'date' => $date
+    ));
+    for ($i=0; $i<sizeof($admins); $i++) {
+      $admin = $admins[$i];
+    $url = "https://fcm.googleapis.com/fcm/send";
+    $token = $admin['fcm_id'];
+    $serverKey = 'AAAAzpxcHnA:APA91bETrty9E8Fbxg4E2-VJkXPM9-PslVeYJvhmc_Onq98ZS0n7_WyS-XkpL7_Ub6gNnDIhd8kKEPRkNadnk-So4kVRbZTDi-Cg2pHgUb1PmKx_-musYRuNCnN7uGKiZdQWLrkaPwpG';
+    $title = "Registrasi Pengguna Baru";
+    $body = "Ada pengguna baru yang mendaftar. Klik untuk menyetujui.";
+    $notification = array('title' =>$title , 'body' => $body, 'sound' => 'default', 'badge' => '1');
+    $arrayToSend = array('to' => $token, 'notification' => $notification,'priority'=>'high');
+    $json = json_encode($arrayToSend);
+    $headers = array();
+    $headers[] = 'Content-Type: application/json';
+    $headers[] = 'Authorization: key='. $serverKey;
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_CUSTOMREQUEST,"POST");
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $json);
+    curl_setopt($ch, CURLOPT_HTTPHEADER,$headers);
+    //Send the request
+    $response = curl_exec($ch);
+    //Close request
+    if ($response === FALSE) {
+    }
+    curl_close($ch);
+    }
+  }
+  
   public function test() {
     echo "Halo dunia";
   }

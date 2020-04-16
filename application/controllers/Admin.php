@@ -2,9 +2,17 @@
 
 class Admin extends CI_Controller {
   
+  public function get_registrations() {
+    $start = intval($this->input->post('start'));
+    $limit = intval($this->input->post('length'));
+    $this->db->order_by('date', 'DESC');
+    $this->db->limit($limit, $start);
+    echo json_encode($this->db->get('registrations')->result_array());
+  }
+  
   public function update_fcm_id() {
     $adminID = intval($this->input->post('admin_id'));
-    $fcmID = $this->input->post('fcm_id'));
+    $fcmID = $this->input->post('fcm_id');
     $this->db->where('id', $adminID);
     $this->db->update('admins', array(
       'fcm_id' => $fcmID
