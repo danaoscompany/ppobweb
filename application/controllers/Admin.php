@@ -61,9 +61,9 @@ class Admin extends CI_Controller {
             'date' => $date,
             'img' => $this->upload->data()['file_name']
           ));
-        } else {
-          echo json_encode($this->upload->display_errors());
         }
+          echo json_encode($this->upload->display_errors());
+        
     }
   }
   
