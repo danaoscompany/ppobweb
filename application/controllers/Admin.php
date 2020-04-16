@@ -54,15 +54,17 @@ class Admin extends CI_Controller {
         $this->load->library('upload', $config);
         if($this->upload->do_upload('file'))
         { 
+          $fileName = $this->upload->data()['file_name'];
           $this->db->where('id', $newsID);
           $this->db->update('news', array(
             'title' => $title,
             'content' => $content,
             'date' => $date,
-            'img' => $this->upload->data()['file_name']
+            'img' => $fileName
           ));
+          echo "File name " . $fileName . "<br/>";
         }
-          echo json_encode($this->upload->display_errors());
+          echo "Error: " . json_encode($this->upload->display_errors());
         
     }
   }
