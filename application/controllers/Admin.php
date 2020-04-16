@@ -1,6 +1,40 @@
 <?php
 
 class Admin extends CI_Controller {
+
+  public function add_news() {
+    $title = $this->input->post('title');
+    $content = $this->input->post('content');
+    $date = $this->input->post('date');
+    $img = $this->input->post('img');
+    $this->db->insert('news', array(
+      'title' => $title,
+      'content' => $content,
+      'date' => $date,
+      'img' => $img
+    ));
+  }
+  
+  public function edit_news() {
+    $newsID = intval($this->input->post('id'));
+    $title = $this->input->post('title');
+    $content = $this->input->post('content');
+    $date = $this->input->post('date');
+    $img = $this->input->post('img');
+    $this->db->where('id', $newsID);
+    $this->db->update('news', array(
+      'title' => $title,
+      'content' => $content,
+      'date' => $date,
+      'img' => $img
+    ));
+  }
+  
+  public function delete_news() {
+    $newsID = intval($this->input->post('id'));
+    $this->db->where('id', $newsID);
+    $this->db->delete('news');
+  }
   
   public function get_registrations() {
     $start = intval($this->input->post('start'));
