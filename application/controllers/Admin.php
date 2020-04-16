@@ -13,13 +13,22 @@ class Admin extends CI_Controller {
     $title = $this->input->post('title');
     $content = $this->input->post('content');
     $date = $this->input->post('date');
-    $img = $this->input->post('img');
-    $this->db->insert('news', array(
-      'title' => $title,
-      'content' => $content,
-      'date' => $date,
-      'img' => $img
-    ));
+    $config = array(
+        'upload_path' => "./userdata/",
+        'allowed_types' => "gif|jpg|png|jpeg",
+        'overwrite' => TRUE,
+        'max_size' => "2048000"
+        );
+        $this->load->library('upload', $config);
+        if($this->upload->do_upload('file'))
+        { 
+          $this->db->insert('news', array(
+            'title' => $title,
+            'content' => $content,
+            'date' => $date,
+            'img' => $this->upload->data()['file_name']
+          ));
+        }
   }
   
   public function edit_news() {
@@ -27,14 +36,23 @@ class Admin extends CI_Controller {
     $title = $this->input->post('title');
     $content = $this->input->post('content');
     $date = $this->input->post('date');
-    $img = $this->input->post('img');
-    $this->db->where('id', $newsID);
-    $this->db->update('news', array(
-      'title' => $title,
-      'content' => $content,
-      'date' => $date,
-      'img' => $img
-    ));
+    $config = array(
+        'upload_path' => "./userdata/",
+        'allowed_types' => "gif|jpg|png|jpeg",
+        'overwrite' => TRUE,
+        'max_size' => "2048000"
+        );
+        $this->load->library('upload', $config);
+        if($this->upload->do_upload('file'))
+        { 
+          $this->db->where('id', $newsID);
+          $this->db->update('news', array(
+            'title' => $title,
+            'content' => $content,
+            'date' => $date,
+            'img' => $this->upload->data()['file_name']
+          ));
+        }
   }
   
   public function delete_news() {
