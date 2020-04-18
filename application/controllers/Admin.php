@@ -2,6 +2,14 @@
 
 class Admin extends CI_Controller {
   
+  public function get_with_length() {
+    $name = $this->input->post('name');
+    $start = intval($this->input->post('start'));
+    $length = intval($this->input->post('length'));
+    $this->db->limit($length, $start);
+    echo json_encode($this->db->get($name)->result_array());
+  }
+  
   public function get_news() {
     $start = intval($this->input->post('start'));
     $length = intval($this->input->post('length'));
