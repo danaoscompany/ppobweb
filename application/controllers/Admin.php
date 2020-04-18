@@ -2,6 +2,13 @@
 
 class Admin extends CI_Controller {
   
+  public function add_category() {
+    $category = $this->input->post('category');
+    $this->db->insert('product_category', array(
+      'category' => $category
+    ));
+  }
+  
   public function get_with_length() {
     $name = $this->input->post('name');
     $start = intval($this->input->post('start'));
