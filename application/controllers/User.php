@@ -228,6 +228,7 @@ class User extends CI_Controller {
     $userID = intval($this->input->post('user_id'));
     $phone = $this->input->post('phone');
     $product = $this->input->post('product_code');
+    $command = $this->input->post('command');
     $message = $this->input->post('message');
     $date = $this->input->post('date');
     $transaction_n = 1;
@@ -244,6 +245,7 @@ class User extends CI_Controller {
         'phone' => $phone,
         'product_code' => $product,
         'transaction_n' => $transaction_n,
+        'command' => $command,
         'message' => $message,
         'date' => $date
       ));
