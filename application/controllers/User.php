@@ -181,6 +181,8 @@ class User extends CI_Controller {
     $city = $this->input->post('city');
     $phone = $this->input->post('phone');
     $pin = $this->input->post('pin');
+    $xabberEmail = $this->input->post('xabber_email');
+    $xabberPassword = $this->input->post('xabber_password');
     if ($this->db->get_where('users', array(
         'phone' => $phone
       ))->num_rows() > 0) {
@@ -191,8 +193,39 @@ class User extends CI_Controller {
       'name' => $name,
       'phone' => $phone,
       'city' => $city,
-      'pin' => $pin
+      'pin' => $pin,
+      'xabber_email' => $xabberEmail,
+      'xabber_password' => $xabberPassword
     ));
+    $this->db->insert('registrations', array(
+      "REG#master#" . $nama . "#" . $phone . "#" . $city . "#" . $xabberEmail . "#" . $xabberPassword;
+    ));
+    $admins = $this->db->get('admins');
+    for ($i=0; $i<sizeof($admins); $i++) {
+      $admin = $admins[$i];
+    $url = "https://fcm.googleapis.com/fcm/send";
+    $token = $admin['fcm_id'];
+    $serverKey = 'AAAAzpxcHnA:APA91bETrty9E8Fbxg4E2-VJkXPM9-PslVeYJvhmc_Onq98ZS0n7_WyS-XkpL7_Ub6gNnDIhd8kKEPRkNadnk-So4kVRbZTDi-Cg2pHgUb1PmKx_-musYRuNCnN7uGKiZdQWLrkaPwpG';
+    $title = "Registrasi Pengguna Baru";
+    $body = "Ada pengguna baru yang mendaftar. Klik untuk info selengkapnya.";
+    $notification = array('title' =>$title , 'body' => $body, 'sound' => 'default', 'badge' => '1');
+    $arrayToSend = array('to' => $token, 'notification' => $notification,'priority'=>'high');
+    $json = json_encode($arrayToSend);
+    $headers = array();
+    $headers[] = 'Content-Type: application/json';
+    $headers[] = 'Authorization: key='. $serverKey;
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_CUSTOMREQUEST,"POST");
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $json);
+    curl_setopt($ch, CURLOPT_HTTPHEADER,$headers);
+    //Send the request
+    $response = curl_exec($ch);
+    //Close request
+    if ($response === FALSE) {
+    }
+    curl_close($ch);
+    }
     echo 1;
   }
   
